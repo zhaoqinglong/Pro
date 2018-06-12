@@ -80,6 +80,16 @@ const menuData = [
     ],
   },
   {
+    name: '我的列表页',
+    icon: 'profile',
+    path: 'student',
+    children: [
+      {
+        name: '学生基础列表页',
+        path: 'studentlist',
+      }],
+  },
+  {
     name: '详情页',
     icon: 'profile',
     path: 'profile',

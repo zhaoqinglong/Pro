@@ -1,20 +1,11 @@
-const path = require('path');
-
 module.exports = {
   plugins: [
     [
-      'module-resolver',
+      'babel-plugin-module-resolver',
       {
         alias: {
-          components: path.join(__dirname, './src/components'),
+          components: './src/components',
         },
-      },
-    ],
-    [
-      'import',
-      {
-        libraryName: 'antd',
-        style: true, // or 'css'
       },
     ],
   ],

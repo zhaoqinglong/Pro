@@ -55,6 +55,7 @@ module.exports = {
         functions: 'ignore',
       },
     ],
+    'linebreak-style': ['error', 'windows'],
     'object-curly-newline': [0],
     'function-paren-newline': [0],
     'no-restricted-globals': [0],

@@ -13,6 +13,9 @@ export default {
   alias: {
     components: path.resolve(__dirname, 'src/components/'),
   },
+  externals: {
+    Mmbs: 'window.Mmbs',
+  },
   ignoreMomentLocale: true,
   theme: './src/theme.js',
   html: {

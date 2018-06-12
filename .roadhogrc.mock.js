@@ -49,6 +49,20 @@ const proxy = {
       address: 'Sidney No. 1 Lake Park',
     },
   ],
+  'GET /api/students':[
+    {
+      id: 1,
+      name: '张山',
+      age: 15,
+      class: "一年级"
+    },
+    {
+      id: 2,
+      name: '李四',
+      age: 18,
+      class: "三年级"
+    }
+  ],
   'GET /api/project/notice': getNotice,
   'GET /api/activities': getActivities,
   'GET /api/rule': getRule,
