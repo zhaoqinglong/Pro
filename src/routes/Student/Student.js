@@ -81,8 +81,7 @@ function mapPropsToState({ student, loading }){
   }
 }
 
-
-export default class StudentList extends Component{
+class StudentList extends Component{
   
   state = {
     visible: false,
@@ -122,6 +121,14 @@ export default class StudentList extends Component{
       form.resetFields();
       this.setState({ visible: false });
     });
+
+    this.props.dispatch({
+      type: 'student/fetch',
+      payload: {
+        count: 5,
+      },
+    });
+
   }
   saveFormRef = (formRef) => {
     this.formRef = formRef;
@@ -143,10 +150,10 @@ export default class StudentList extends Component{
 
 
   render(){
- 
-    const { student: { list }, loading } = this.props;
-    console.log(this.props);
-    console.log('list',list);
+     console.log(this.props);
+    const { student: { list,total }, loading } = this.props;
+    // console.log(this.props);
+    // console.log('list',list);
 
     const extraContent = (
       <div className={styles.extraContent}>
@@ -264,3 +271,5 @@ export default class StudentList extends Component{
     );
   }
 }
+
+export default connect(mapPropsToState)(StudentList)
