@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import {connect} from 'dva';
-import {queryStuList,create,removeStuById,queryStus} from './../../services/student'
+import {queryStuList,create,removeStuById,queryStus,cloudHello} from './../../services/student'
 import {
   List,
   Card,
@@ -145,6 +145,8 @@ class StudentList extends Component{
     // add().then(res=>{
     //   console.log(res)
     // });
+
+    cloudHello();
   }
 
 
