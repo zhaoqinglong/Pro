@@ -138,7 +138,7 @@ export async function cloudHello() {
   Mmbs.Cloud.run('hello').then((data) => {
     // 调用成功，得到成功的应答 data
     console.log('cloudhello',data);
-  }, function(error) {
+  }, (error) => {
     // 处理调用失败
     console.log('cloudhelloErr',error);
   });

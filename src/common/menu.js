@@ -87,6 +87,10 @@ const menuData = [
       {
         name: '学生基础列表页',
         path: 'studentlist',
+      },
+      {
+        name: '测试页',
+        path: 'test',
       }],
   },
   {
