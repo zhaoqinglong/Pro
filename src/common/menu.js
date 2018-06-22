@@ -91,6 +91,10 @@ const menuData = [
       {
         name: '测试页',
         path: 'test',
+      },
+      {
+        name: '评论',
+        path: 'commentApp',
       }],
   },
   {

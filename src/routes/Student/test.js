@@ -6,6 +6,7 @@ export default class test extends Component{
     return(
       <div>
         <span>hello world</span>
+        <LikeButton />
         <LikeButton likedText='已赞' unlikedText='赞' />
       </div>
     )

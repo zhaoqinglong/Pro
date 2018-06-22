@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
 export default  class LikeButton extends Component{
+
+  static defaultProps={
+    likedText:"取消",
+    unlikedText:"点赞",
+  }
 
   constructor() {
     super();
@@ -16,11 +20,12 @@ export default  class LikeButton extends Component{
   }
 
   render(){
-    const likedText=this.props.likedText||"取消";
-    const unlikedText=this.props.unlikedText||"点赞";    
+
     return(
       <div>
-        <button onClick={this.handleClickOnLikeButton.bind(this)}>{this.state.isLiked?likedText:unlikedText}👍</button>
+        <button onClick={this.handleClickOnLikeButton.bind(this)}>
+          {this.state.isLiked?this.props.likedText:this.props.unlikedText}👍
+        </button>
       </div>
     )
   }

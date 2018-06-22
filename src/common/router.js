@@ -134,6 +134,11 @@ export const getRouterData = app => {
     '/student/test': {
       component: dynamicWrapper(app, ['student'], () => import('../routes/Student/test')),
     },
+    '/student/commentApp': {
+      component: dynamicWrapper(app, ['student'], () => import('../routes/Student/CommentApp')),
+    },
+
+
     '/profile/basic': {
       component: dynamicWrapper(app, ['profile'], () => import('../routes/Profile/BasicProfile')),
     },
