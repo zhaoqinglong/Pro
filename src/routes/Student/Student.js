@@ -21,6 +21,9 @@ import {
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from '../List/BasicList.less';
+// import AddStudentForm from '../Student/AddStudentForm';
+
+
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const { Search } = Input;
@@ -82,10 +85,47 @@ function mapPropsToState({ student, loading }){
 }
 
 class StudentList extends Component{
-  
+
   state = {
     visible: false,
+    gender:'all',
+    keywords:'',
   };
+
+
+  //选择性别的触发事件
+  onGenderChangeHandler = (event) => {
+    const { dispatch } = this.props
+    const gender = event.target.value
+    this.setState({
+      gender,
+    })
+    dispatch({
+      type: 'student/fetchList',
+      payload: {
+        gender,
+        keywords: this.state.keywords,
+      },
+    })
+  }
+  //输入搜索管检测的触发事件
+  onKeywordsChangeHandler = (value) => {
+
+    const {dispatch}=this.props;
+    const keywords=value;
+    this.setState({
+      keywords,
+    });
+
+    dispatch({
+      type: 'student/fetchList',
+      payload: {
+        gender:this.state.gender,
+        keywords,
+      },
+    })
+
+  }
 
   //按条件搜索学生列表
   searchStus=e=>{
@@ -159,15 +199,15 @@ class StudentList extends Component{
 
     const extraContent = (
       <div className={styles.extraContent}>
-        <RadioGroup defaultValue="all">
-          <RadioButton value="all">全部</RadioButton>
+        <RadioGroup defaultValue={this.state.gender} onChange={this.onGenderChangeHandler.bind(this)} >
+          <RadioButton value="">全部</RadioButton>
           <RadioButton value="male">男</RadioButton>
           <RadioButton value="female">女</RadioButton>
         </RadioGroup>
-        <Search className={styles.extraContentSearch} placeholder="请输入" onSearch={() => ({})} />
-        <Button type="primary" style={{ marginLeft: 8 }}  onClick={this.searchStus}>
+        <Search className={styles.extraContentSearch} placeholder="请输入" defaultValue={this.state.keywords} onSearch={this.onKeywordsChangeHandler.bind(this)} />
+        {/* <Button type="primary" style={{ marginLeft: 8 }}  onClick={this.searchStus}>
               搜索
-        </Button> 
+        </Button>  */}
       </div>
     );
 
@@ -249,12 +289,15 @@ class StudentList extends Component{
           onCancel={this.handleCancel}
           onCreate={this.handleCreate}
         />
+
+
+
             <List
               size="large"
               rowKey="id"
               loading={loading}
               pagination={false}
-              dataSource={list.list}
+              dataSource={list}
               renderItem={item => (
                 <List.Item actions={[<a>编辑</a>, <MoreBtn />]}>
                   {/* <List.Item.Meta

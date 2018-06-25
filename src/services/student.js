@@ -14,7 +14,7 @@ export async function queryStuList() {
     total,
     list: list.map(m => ({...m, ...m.attributes})),
   }
-  console.log(res);
+  console.log('queryStuList',res);
   return res;
 
   
@@ -64,7 +64,7 @@ if(total>pageSize){
     total,
     list: list.map(m => ({...m, ...m.attributes})),
   }
-  console.log('query',res);
+  console.log('queryStus',res);
   return res;
 }
 
