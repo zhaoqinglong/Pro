@@ -1,5 +1,5 @@
 // 这里是redux
-import { queryStuList,queryStus } from '../services/student';
+import { queryStuList,queryStus,create } from '../services/student';
 
 export default {
   namespace: 'student',
@@ -12,6 +12,7 @@ export default {
   },
 
   effects: {
+
     *fetch(_, { call, put }) {
       // const response = yield call(queryStuList);
 
@@ -21,7 +22,7 @@ export default {
         payload: { list,total},
       });
     },
-    *fetchList({payload:{page=1, pageSize=5, gender='all',keywords='' } },{call,put}){
+    *fetchList({payload:{page=1, pageSize=5, gender='',keywords='' } },{call,put}){
         const params={
           page,
           pageSize,
@@ -45,6 +46,24 @@ export default {
         });
 
     },
+    *add({payload:{name,age,gender}},{call,put}){
+      console.log('payload',name)
+      // if(!name && !name.length)
+      //   return;
+      const params={
+        name,
+        age,
+        gender,
+      };
+
+      yield call(create(params));
+
+      // 添加完成后，调用查询
+      // yield put({
+      //   type: 'fetchList',
+      // })
+
+    },
 
   },
 
@@ -53,10 +72,13 @@ export default {
       return {
         ...state,
         list: action.payload.list,
+        total:action.payload.total,
       };
     },
     // state表示原来的数据，
     // action触发相关方法，修改state对象，他的payload表示上一步传入的数据
+    // reducer接收state和action，并返回新的state的函数
+
     saveList(state,action){
       console.log('state',state);
       console.log('action',action);

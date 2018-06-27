@@ -18,6 +18,7 @@ import {
   message,
   Avatar,
   Form,
+  Pagination,
 } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import styles from '../List/BasicList.less';
@@ -88,9 +89,11 @@ class StudentList extends Component{
 
   state = {
     visible: false,
-    gender:'all',
+    gender:'',
     keywords:'',
+    pageSize:5,
   };
+
 
 
   //选择性别的触发事件
@@ -136,11 +139,43 @@ class StudentList extends Component{
       gender:'male',
       keywords:''
     };
-
     var res=queryStus(params);
-
     console.log(res);
+  }
 
+  // 点击页码的函数
+  pageNumChangeHandler=(page, pageSize)=>{
+    const{dispatch}=this.props;
+    dispatch({
+      type: 'student/fetchList',
+      payload: {
+        page,
+        pageSize,
+        gender:this.state.gender,
+        keywords: this.state.keywords,
+      },
+    })
+  }
+
+  //每页大小改变的函数,current表示当前页，size表示改变后的每页数据条数
+  pageSizeChangeHandler=(current, size)=>{
+    console.log('current',current)
+    console.log('size',size)
+    
+    this.setState({
+      pageSize:size,
+    })
+
+    const{dispatch}=this.props;
+    dispatch({
+      type: 'student/fetchList',
+      payload: {
+        page:current,
+        pageSize:size,
+        gender:this.state.gender,
+        keywords: this.state.keywords,
+      },
+    })
   }
 
   showModal = () => {
@@ -157,17 +192,20 @@ class StudentList extends Component{
       }
 
       console.log('Received values of form: ', values);
-      create(values);
+      // create(values);
+      this.props.dispatch({
+        type: 'student/add',
+        payload: values,
+      });
       form.resetFields();
       this.setState({ visible: false });
     });
 
-    this.props.dispatch({
-      type: 'student/fetch',
-      payload: {
-        count: 5,
-      },
-    });
+    // this.props.dispatch({
+    //   type: 'student/fetchList',
+    //   payload: {       
+    //   },
+    // });
 
   }
   saveFormRef = (formRef) => {
@@ -176,25 +214,24 @@ class StudentList extends Component{
 
   componentDidMount(){
     this.props.dispatch({
-      type: 'student/fetch',
+      type: 'student/fetchList',
       payload: {
-        count: 5,
+      
       },
     });
     
-    // add().then(res=>{
-    //   console.log(res)
-    // });
 
     cloudHello();
   }
 
 
 
+
+
   render(){
      console.log(this.props);
     const { student: { list,total }, loading } = this.props;
-    // console.log(this.props);
+     console.log('this.props',this.props);
     // console.log('list',list);
 
     const extraContent = (
@@ -253,24 +290,22 @@ class StudentList extends Component{
       </Dropdown>
     );
 
+    const paginationProps = {
+      showSizeChanger: false,
+      showQuickJumper: true,
+      pageSizeOptions: ['5', '10', '20', '50'],
+       defaultPageSize: 5,
+       pageSize:5,
+      total,
+      showTotal:total => `共 ${total} 条记录`,
+      onChange:(page, pageSize)=>this.pageNumChangeHandler(page, pageSize),
+      onShowSizeChange:this.pageSizeChangeHandler,
+    };
 
 
     return (
       <PageHeaderLayout>
         <div className={styles.standardList}>
-          {/* <Card bordered={false}>
-            <Row>
-              <Col sm={8} xs={24}>
-                <Info title="我的待办" value="8个任务" bordered />
-              </Col>
-              <Col sm={8} xs={24}>
-                <Info title="本周任务平均处理时间" value="32分钟" bordered />
-              </Col>
-              <Col sm={8} xs={24}>
-                <Info title="本周完成任务数" value="24个任务" />
-              </Col>
-            </Row>
-          </Card> */}
 
           <Card
             className={styles.listCard}
@@ -296,7 +331,7 @@ class StudentList extends Component{
               size="large"
               rowKey="id"
               loading={loading}
-              pagination={false}
+              pagination={paginationProps}
               dataSource={list}
               renderItem={item => (
                 <List.Item actions={[<a>编辑</a>, <MoreBtn />]}>
