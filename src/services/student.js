@@ -74,19 +74,21 @@ export async function create(params) {
   stu.set('name',name);
   stu.set('age',age*1);
   stu.set('gender',gender);
-  return stu.save();
+  // const res= await stu.save();
+  // console.log('save',res);
+  // return res;
   // return util.createStudent();
   // const stu = new Student();
   // stu.set("name", '张山');
   // stu.set("age",15);
-  // stu.save(null, {
-  //   success(object) {
-  //     console.log(`create object success, object id:${object.id}`);
-  //   },
-  //   error(model, error) {
-  //     console.log("create object fail", error);
-  //   },
-  // })
+  stu.save(null, {
+    success(object) {
+      console.log(`create object success, object id:${object.id}`);
+    },
+    error(model, error) {
+      console.log("create object fail", error);
+    },
+  })
 }
 
 export async function removeStuById(params) {

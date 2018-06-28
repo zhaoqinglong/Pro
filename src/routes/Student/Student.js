@@ -159,8 +159,8 @@ class StudentList extends Component{
 
   //每页大小改变的函数,current表示当前页，size表示改变后的每页数据条数
   pageSizeChangeHandler=(current, size)=>{
-    console.log('current',current)
-    console.log('size',size)
+    // console.log('current',current)
+    // console.log('size',size)
     
     this.setState({
       pageSize:size,
@@ -201,11 +201,11 @@ class StudentList extends Component{
       this.setState({ visible: false });
     });
 
-    // this.props.dispatch({
-    //   type: 'student/fetchList',
-    //   payload: {       
-    //   },
-    // });
+    this.props.dispatch({
+      type: 'student/fetchList',
+      payload: {       
+      },
+    });
 
   }
   saveFormRef = (formRef) => {
@@ -229,9 +229,9 @@ class StudentList extends Component{
 
 
   render(){
-     console.log(this.props);
+    //  console.log(this.props);
     const { student: { list,total }, loading } = this.props;
-     console.log('this.props',this.props);
+    //  console.log('this.props',this.props);
     // console.log('list',list);
 
     const extraContent = (

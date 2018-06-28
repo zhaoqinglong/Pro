@@ -46,21 +46,22 @@ export default {
         });
 
     },
-    *add({payload:{name,age,gender}},{call,put}){
-      console.log('payload',name)
+    *add({payload},{call,put}){
+      // console.log('payload',name)
       // if(!name && !name.length)
       //   return;
-      const params={
-        name,
-        age,
-        gender,
-      };
+      // const params={
+      //   name,
+      //   age,
+      //   gender,
+      // };
 
-      yield call(create(params));
+      yield call(create,payload);
 
       // 添加完成后，调用查询
       // yield put({
       //   type: 'fetchList',
+      //   payload:{},
       // })
 
     },
@@ -80,13 +81,13 @@ export default {
     // reducer接收state和action，并返回新的state的函数
 
     saveList(state,action){
-      console.log('state',state);
-      console.log('action',action);
-      const res={ 
-        ...state,
-        ...action.payload,
-      };
-      console.log('sa',res);
+      // console.log('state',state);
+      // console.log('action',action);
+      // const res={ 
+      //   ...state,
+      //   ...action.payload,
+      // };
+      // console.log('sa',res);
       return{
         ...state,
         list:action.payload.list,
